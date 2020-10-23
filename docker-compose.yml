@@ -1,0 +1,22 @@
+version: "3.8"
+   
+services:
+  db_torneos:
+    container_name: db_torneos
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  api_torneos:
+    container_name: api_torneos
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment: 
+      - PUBLIC_JWT=AQUIDEBEIRLALLAVEPUBLICA
+    depends_on:
+      - db_torneos
