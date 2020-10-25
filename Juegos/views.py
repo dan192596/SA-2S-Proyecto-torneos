@@ -17,7 +17,7 @@ class JuegoView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        if not 'ip' in request.data or not 'name' in request.data:
+        if not 'ip' in request.data or not 'nombre' in request.data:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         juego = Juego.objects.create(ip=request.data['ip'], nombre=request.data['nombre'])
         response = {
