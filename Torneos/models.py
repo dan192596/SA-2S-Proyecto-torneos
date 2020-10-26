@@ -13,7 +13,7 @@ class Torneo(models.Model):
     fase = models.IntegerField(default=0)
     
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 class Partida(models.Model):
     jugador1 = models.CharField(blank=False, null=False, max_length=10)
@@ -27,4 +27,4 @@ class Partida(models.Model):
     fase = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
