@@ -17,10 +17,15 @@ from django.contrib import admin
 from django.urls import path, re_path
 
 from Juegos.views import JuegoView
+from Torneos.views import TorneoView, PartidaView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #re_path(r'^juego/(?P<id>\d+)/', JuegoView.as_view(), name='crud_juego'),
+    path('partidas/', PartidaView.as_view(), name='crud_partida'),
+    path('partidas/<str:id>', PartidaView.as_view(), name='crud_torneo'),
+    path('torneo/', TorneoView.as_view(), name='crud_torneo'),
+    path('torneo/<int:id>', TorneoView.as_view(), name='crud_torneo'),
     path('juego/', JuegoView.as_view(), name='crud_juego'),
     path('juego/<int:id>', JuegoView.as_view(), name='crud_juego'),
 ]

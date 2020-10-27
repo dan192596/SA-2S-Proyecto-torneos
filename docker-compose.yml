@@ -18,5 +18,7 @@ services:
       - "8000:8000"
     environment: 
       - PUBLIC_JWT=AQUIDEBEIRLALLAVEPUBLICA
+      - URL_USUARIOS="http://localhost:8000"
+      - URL_JUEGOS="http://localhost:8000"
     depends_on:
       - db_torneos

@@ -6,4 +6,4 @@ class Juego(models.Model):
     ip = models.TextField(editable=True)    
     
     def __str__(self):
-        return self.Nombre
+        return self.nombre
