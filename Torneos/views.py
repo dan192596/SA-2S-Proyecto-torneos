@@ -98,7 +98,7 @@ class PartidaView(APIView):
                 data = jwt.decode(token[1], public_key, audience='2' ,algorithm='RS256')
                 valid = False            
                 for scope in data['scopes']:
-                    if scope == "torneos.partida.get":
+                    if scope == "torneos.partida.put":
                         valid = True
                 if not valid:
                     print("Token invalido")
