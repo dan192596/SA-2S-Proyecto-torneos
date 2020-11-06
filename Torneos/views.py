@@ -9,9 +9,12 @@ from Juegos.models import Juego
 from .models import Torneo, Partida
 from .serializers import TorneoSerializer, PartidaSerializer
 
+from jwt.contrib.algorithms.pycrypto import RSAAlgorithm
+
 import requests
 import random
 import os
+import jwt
 
 # Create your views here.
 class TorneoView(APIView):
@@ -83,7 +86,26 @@ class PartidaView(APIView):
         serializer = PartidaSerializer(partida, many=False, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request, id):        
+    def put(self, request, id):
+        if os.environ['REVISAR_JWT'] =='True':
+            try:
+                authorizationHeader = request.META.get('HTTP_AUTHORIZATION')
+                token = authorizationHeader.split()            
+                f = open(os.environ['PUBLIC_JWT'], "r")
+                public_key = f.read()
+                jwt.unregister_algorithm('RS256')
+                jwt.register_algorithm('RS256', RSAAlgorithm(RSAAlgorithm.SHA256))
+                data = jwt.decode(token[1], public_key, audience='2' ,algorithm='RS256')
+                valid = False            
+                for scope in data['scopes']:
+                    if scope == "torneos.partida.get":
+                        valid = True
+                if not valid:
+                    print("Token invalido")
+                    return Response(status=status.HTTP_401_UNAUTHORIZED)
+                print("Token Valido")
+            except:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
         partida = Partida.objects.get(uuid =id)
         if len(request.data['marcador']) !=2:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)

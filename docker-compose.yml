@@ -17,7 +17,8 @@ services:
     ports:
       - "8000:8000"
     environment: 
-      - PUBLIC_JWT=AQUIDEBEIRLALLAVEPUBLICA
+      - PUBLIC_JWT=oauth-public.key
+      - REVISAR_JWT=True
       - URL_USUARIOS="http://localhost:8000"
       - URL_JUEGOS="http://localhost:8000"
     depends_on:
