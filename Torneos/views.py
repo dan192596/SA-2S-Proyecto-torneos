@@ -53,7 +53,7 @@ class TorneoView(APIView):
             partida = Partida.objects.create(jugador1=jugador1, jugador2=jugador2, torneo=torneo, orden=i)
             params = "?id="+os.environ['ID_TOKEN']+"&secret="+os.environ['SECRET_TOKEN']
             print(os.environ['URL_TOKEN']+params)
-            dataRequests  = requests.get(os.environ['URL_TOKEN']+params)
+            dataRequests  = requests.post(os.environ['URL_TOKEN']+params)
             print(dataRequests.text)
             data = json.loads(dataRequests.text)
             stringuuid = str(partida.uuid)
