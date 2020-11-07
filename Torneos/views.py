@@ -67,9 +67,10 @@ class TorneoView(APIView):
                 'Authorization': 'Bearer '+data['jwt']
             }
             print(juego.ip+os.environ['GAMING_BEHAVIOR'])
-            print(myobj)
+            myobj = json.loads(myobj)
+            print(json.loads(myobj))
             print(myheader)
-            response = requests.post(juego.ip+os.environ['GAMING_BEHAVIOR'], json = myobj, headers = myheader)
+            #response = requests.post(juego.ip+os.environ['GAMING_BEHAVIOR'], json = myobj, headers = myheader)
             print(response)
         serializer = TorneoSerializer(torneo, many=False, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
