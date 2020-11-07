@@ -57,7 +57,7 @@ class TorneoView(APIView):
             print(dataRequests)
             print(dataRequests.text)
             data = json.loads(dataRequests.text)
-            stringuuid = partida.uuid
+            stringuuid = str(partida.uuid)
             stringuuid = stringuuid.replace("UUID('","")
             stringuuid = stringuuid.replace("')","")
 
