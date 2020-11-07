@@ -51,10 +51,7 @@ class TorneoView(APIView):
             index_jugador = random.randrange(0,len(jugadores))
             jugador2 = jugadores.pop(index_jugador)
             partida = Partida.objects.create(jugador1=jugador1, jugador2=jugador2, torneo=torneo, orden=i)
-            params = {
-                "id": os.environ['ID_TOKEN'],
-                "secret": os.environ['SECRET_TOKEN']
-            }
+            params = "?id="+os.environ['ID_TOKEN']+"&secret="+os.environ['SECRET_TOKEN']            
             dataRequests  = requests.get(os.environ['URL_TOKEN'], params = params)
             data = json.loads(dataRequests)
             myobj = {
