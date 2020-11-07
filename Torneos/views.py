@@ -36,8 +36,9 @@ class TorneoView(APIView):
                 cantidad_jugadores = cociente
         cantidad_partidas_por_jugar = jugadores_por_torneo //2
         cantidad_partidas_jugadas = 0
+        juego = Juego.objects.get(id=request.data['juego'])
         torneo = Torneo.objects.create(
-                juego = Juego.objects.get(id=request.data['juego']), 
+                juego = juego, 
                 cantidad_jugadores = jugadores_por_torneo,
                 cantidad_partidas_por_jugar=cantidad_partidas_por_jugar,
                 cantidad_partidas_jugadas=cantidad_partidas_jugadas
@@ -48,7 +49,20 @@ class TorneoView(APIView):
             jugador1 = jugadores.pop(index_jugador)
             index_jugador = random.randrange(0,len(jugadores))
             jugador2 = jugadores.pop(index_jugador)
-            Partida.objects.create(jugador1=jugador1, jugador2=jugador2, torneo=torneo, orden=i)
+            partida = Partida.objects.create(jugador1=jugador1, jugador2=jugador2, torneo=torneo, orden=i)
+            params = {
+                "id": os.environ['ID_Token'],
+                "secret": os.environ['SECRET_TOKEN']
+            }
+            myobj = {
+                "id":Partida.uuid,
+                "jugadores": [int(jugador1), int(jugador2)]
+            }
+            myheader = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer'
+            }
+            requests.post(juego.ip+os.environ['GAMING_BEHAVIOR'], json = myobj, headers = myheader)
         serializer = TorneoSerializer(torneo, many=False, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     

@@ -19,7 +19,10 @@ services:
     environment: 
       - PUBLIC_JWT=oauth-public.key
       - REVISAR_JWT=True
-      - URL_USUARIOS="http://localhost:8000"
-      - URL_JUEGOS="http://localhost:8000"
+      - URL_USUARIOS="http://104.155.167.93:8000"
+      - URL_TOKEN="http://35.202.209.170/api/token"
+      - ID_TOKEN=2
+      - SECRET_TOKEN=iLC1FpfVWBtgtnyXSHp8Krb8qvXVGm5EfwLCO0oQ
+      - GAMING_BEHAVIOR="simular"
     depends_on:
       - db_torneos
