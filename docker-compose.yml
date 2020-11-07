@@ -18,7 +18,7 @@ services:
       - "8002:8000"
     environment: 
       - PUBLIC_JWT=oauth-public.key
-      - REVISAR_JWT=False
+      - REVISAR_JWT=True
       - URL_USUARIOS=http://104.155.167.93:8000
       - URL_TOKEN=http://35.202.77.9/token
       - ID_TOKEN=1

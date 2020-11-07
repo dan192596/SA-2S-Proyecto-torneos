@@ -111,32 +111,31 @@ class PartidaView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, id):
-        if os.environ['REVISAR_JWT'] =='True':
-            try:
-                authorizationHeader = request.META.get('HTTP_AUTHORIZATION')
-                token = authorizationHeader.split()            
-                f = open(os.environ['PUBLIC_JWT'], "r")
-                public_key = f.read()
-                jwt.unregister_algorithm('RS256')
-                jwt.register_algorithm('RS256', RSAAlgorithm(RSAAlgorithm.SHA256))
-                jwt_options = {
-                    'verify_signature': False,
-                    'verify_exp': False,
-                    'verify_nbf': False,
-                    'verify_iat': False,
-                    'verify_aud': False
-                }
-                data = jwt.decode(token[1], public_key, options=jwt_options, algorithm='RS256')                
-                valid = False            
-                for scope in data['scopes']:
-                    if scope == "torneos.partida.put":
-                        valid = True
-                if not valid:
-                    print("Token invalido")
-                    return Response(status=status.HTTP_401_UNAUTHORIZED)
-                print("Token Valido")
-            except:
+        if os.environ['REVISAR_JWT'] =='True':            
+            authorizationHeader = request.META.get('HTTP_AUTHORIZATION')
+            token = authorizationHeader.split()            
+            f = open(os.environ['PUBLIC_JWT'], "r")
+            public_key = f.read()
+            jwt.unregister_algorithm('RS256')
+            jwt.register_algorithm('RS256', RSAAlgorithm(RSAAlgorithm.SHA256))
+            jwt_options = {
+                'verify_signature': False,
+                'verify_exp': False,
+                'verify_nbf': False,
+                'verify_iat': False,
+                'verify_aud': False
+            }
+            data = jwt.decode(token[1], public_key, options=jwt_options, algorithm='RS256')                
+            valid = False
+            for scope in data['scopes']:
+                if scope == "torneos.partida.put":
+                    valid = True
+            print("Scopes de token "+str(data['scopes']))
+            print("El scope buscado es dados.tirar, el token es "+str(valid))
+            if not valid:
+                print("Token invalido")
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
+            print("Token Valido")
         partida = Partida.objects.get(uuid =id)
         if len(request.data['marcador']) !=2:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
