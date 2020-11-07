@@ -137,7 +137,7 @@ class PartidaView(APIView):
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
             print("Token Valido")
         partida = Partida.objects.get(uuid =id)
-        if len(request.data['marcador']) !=2:
+        if len(request.data['marcador']) !=2 or partida.completada:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
         partida.jugador1_punteo = request.data['marcador'][0]
         partida.jugador2_punteo = request.data['marcador'][1]
