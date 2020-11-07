@@ -15,10 +15,10 @@ services:
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - "8002:8000"
     environment: 
       - PUBLIC_JWT=oauth-public.key
-      - REVISAR_JWT=True
+      - REVISAR_JWT=False
       - URL_USUARIOS="http://104.155.167.93:8000"
       - URL_TOKEN="http://35.202.209.170/api/token"
       - ID_TOKEN=2
