@@ -60,18 +60,17 @@ class TorneoView(APIView):
             stringuuid = stringuuid.replace("')","")
             myobj = {
                 "id":stringuuid,
-                "jugadores": json.dumps([int(jugador1), int(jugador2)])
+                "jugadores": json.loads(json.dumps([int(jugador1), int(jugador2)]))
             }
             myheader = {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+data['jwt']
             }
-            print(juego.ip+os.environ['GAMING_BEHAVIOR'])
-            myobj = json.loads(myobj)
-            print(json.loads(myobj))
+            print(juego.ip+os.environ['GAMING_BEHAVIOR'])            
+            print(myobj)
             print(myheader)
             #response = requests.post(juego.ip+os.environ['GAMING_BEHAVIOR'], json = myobj, headers = myheader)
-            print(response)
+            #print(response)
         serializer = TorneoSerializer(torneo, many=False, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
