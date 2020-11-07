@@ -65,6 +65,7 @@ class TorneoView(APIView):
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+data['jwt']
             }
+            print(myobj)
             requests.post(juego.ip+os.environ['GAMING_BEHAVIOR'], json = myobj, headers = myheader)
         serializer = TorneoSerializer(torneo, many=False, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
