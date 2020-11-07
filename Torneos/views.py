@@ -55,14 +55,15 @@ class TorneoView(APIView):
             print(os.environ['URL_TOKEN']+params)
             dataRequests  = requests.get(os.environ['URL_TOKEN']+params)
             print(dataRequests)
-            print(dataRequests.text)            
+            print(dataRequests.text)
+            data = json.loads(dataRequests.text)
             myobj = {
                 "id":Partida.uuid,
                 "jugadores": [int(jugador1), int(jugador2)]
             }
             myheader = {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+dataRequests.text['jwt']
+                'Authorization': 'Bearer '+data['jwt']
             }
             requests.post(juego.ip+os.environ['GAMING_BEHAVIOR'], json = myobj, headers = myheader)
         serializer = TorneoSerializer(torneo, many=False, context={'request': request})
