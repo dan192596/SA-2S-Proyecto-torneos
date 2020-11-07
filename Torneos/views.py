@@ -15,6 +15,7 @@ import requests
 import random
 import os
 import jwt
+import json
 
 # Create your views here.
 class TorneoView(APIView):
@@ -54,13 +55,15 @@ class TorneoView(APIView):
                 "id": os.environ['ID_Token'],
                 "secret": os.environ['SECRET_TOKEN']
             }
+            dataRequests  = requests.get(os.environ['URL_TOKEN'], headers = myheader)
+            data = json.loads(dataRequests)
             myobj = {
                 "id":Partida.uuid,
                 "jugadores": [int(jugador1), int(jugador2)]
             }
             myheader = {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer'
+                'Authorization': 'Bearer '+data['jwt']
             }
             requests.post(juego.ip+os.environ['GAMING_BEHAVIOR'], json = myobj, headers = myheader)
         serializer = TorneoSerializer(torneo, many=False, context={'request': request})
@@ -109,7 +112,14 @@ class PartidaView(APIView):
                 public_key = f.read()
                 jwt.unregister_algorithm('RS256')
                 jwt.register_algorithm('RS256', RSAAlgorithm(RSAAlgorithm.SHA256))
-                data = jwt.decode(token[1], public_key, audience='2' ,algorithm='RS256')
+                jwt_options = {
+                    'verify_signature': False,
+                    'verify_exp': False,
+                    'verify_nbf': False,
+                    'verify_iat': False,
+                    'verify_aud': False
+                }
+                data = jwt.decode(token[1], public_key, options=jwt_options, algorithm='RS256')                
                 valid = False            
                 for scope in data['scopes']:
                     if scope == "torneos.partida.put":
