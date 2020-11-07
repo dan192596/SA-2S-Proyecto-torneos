@@ -19,8 +19,8 @@ services:
     environment: 
       - PUBLIC_JWT=oauth-public.key
       - REVISAR_JWT=False
-      - URL_USUARIOS="http://104.155.167.93:8000"
-      - URL_TOKEN="http://35.202.77.9/api/token"
+      - URL_USUARIOS=http://104.155.167.93:8000
+      - URL_TOKEN=http://35.202.77.9/api/token
       - ID_TOKEN=1
       - SECRET_TOKEN=iLC1FpfVWBtgtnyXSHp8Krb8qvXVGm5EfwLCO0oQ
       - GAMING_BEHAVIOR="simular"
