@@ -55,8 +55,8 @@ class TorneoView(APIView):
             print(os.environ['URL_TOKEN']+params)
             dataRequests  = requests.get(os.environ['URL_TOKEN']+params)
             print(dataRequests)
-            print(dataRequests['jwt'])
-            data = json.loads(dataRequests)
+            print(response.text)
+            data = json.loads(response.text)
             myobj = {
                 "id":Partida.uuid,
                 "jugadores": [int(jugador1), int(jugador2)]
