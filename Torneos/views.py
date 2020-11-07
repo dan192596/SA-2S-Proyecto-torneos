@@ -54,7 +54,6 @@ class TorneoView(APIView):
             params = "?id="+os.environ['ID_TOKEN']+"&secret="+os.environ['SECRET_TOKEN']
             print(os.environ['URL_TOKEN']+params)
             dataRequests  = requests.post(os.environ['URL_TOKEN']+params)
-            print(dataRequests.text)
             data = json.loads(dataRequests.text)
             stringuuid = str(partida.uuid)
             stringuuid = stringuuid.replace("UUID('","")
@@ -67,13 +66,13 @@ class TorneoView(APIView):
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+data['jwt']
             }
-            print(request.data['type'])            
+            #print(request.data['type'])            
             print(myobj)
             print(myheader)
+            print(juego.ip+request.data['type'])
             response = requests.post(juego.ip+request.data['type'], json = myobj, headers = myheader)
             print(response.text)
             data = json.loads(response.text)
-            print(data)
         serializer = TorneoSerializer(torneo, many=False, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
