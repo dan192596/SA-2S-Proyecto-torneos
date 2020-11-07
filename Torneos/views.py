@@ -59,7 +59,7 @@ class TorneoView(APIView):
             data = json.loads(dataRequests.text)
             myobj = {
                 "id":Partida.uuid,
-                "jugadores": [int(jugador1), int(jugador2)]
+                "jugadores": json.dumps([int(jugador1), int(jugador2)])
             }
             myheader = {
                 'Content-Type': 'application/json',
