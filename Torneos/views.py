@@ -71,6 +71,7 @@ class TorneoView(APIView):
             print(myobj)
             print(myheader)
             response = requests.post(juego.ip+request.data['type'], json = myobj, headers = myheader)
+            print(response.text)
             data = json.loads(response.text)
             print(data)
         serializer = TorneoSerializer(torneo, many=False, context={'request': request})
