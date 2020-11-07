@@ -57,6 +57,8 @@ class TorneoView(APIView):
             print(dataRequests)
             print(dataRequests.text)
             data = json.loads(dataRequests.text)
+            items = [str(o) for o in partida.uuid]
+            print(items)
             myobj = {
                 "id":partida.uuid,
                 "jugadores": json.dumps([int(jugador1), int(jugador2)])
