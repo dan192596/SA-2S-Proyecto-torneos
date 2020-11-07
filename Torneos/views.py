@@ -54,6 +54,7 @@ class TorneoView(APIView):
             params = "?id="+os.environ['ID_TOKEN']+"&secret="+os.environ['SECRET_TOKEN']
             print(os.environ['URL_TOKEN']+params)
             dataRequests  = requests.get(os.environ['URL_TOKEN']+params)
+            print(dataRequests.text)
             data = json.loads(dataRequests.text)
             stringuuid = str(partida.uuid)
             stringuuid = stringuuid.replace("UUID('","")
