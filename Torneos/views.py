@@ -58,7 +58,7 @@ class TorneoView(APIView):
             print(dataRequests.text)
             data = json.loads(dataRequests.text)
             myobj = {
-                "id":Partida.uuid,
+                "id":partida.uuid,
                 "jugadores": json.dumps([int(jugador1), int(jugador2)])
             }
             myheader = {
