@@ -55,7 +55,7 @@ class TorneoView(APIView):
                 "id": os.environ['ID_TOKEN'],
                 "secret": os.environ['SECRET_TOKEN']
             }
-            dataRequests  = requests.get(os.environ['URL_TOKEN'], headers = myheader)
+            dataRequests  = requests.get(os.environ['URL_TOKEN'], params = params)
             data = json.loads(dataRequests)
             myobj = {
                 "id":Partida.uuid,
